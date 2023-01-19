@@ -15,6 +15,7 @@
     <button onclick="deployActions()">Deploy</button>
 
     <script>
+      // function for calling /get-repos endpoint and displaying it in select
       function getRepos() {
         var requestOptions = {
           method: "GET",
@@ -37,6 +38,7 @@
 
       getRepos();
 
+      // function for calling /deploy endpoint to deploy a workflow file
       function deployActions() {
         let repoName = document.getElementById("repos").value;
 

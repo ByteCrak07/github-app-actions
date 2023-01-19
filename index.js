@@ -13,13 +13,16 @@ const githubApp = new App({
   privateKey: process.env.PRIVATE_KEY.replace(/\\n/gm, "\n"),
 });
 
+// serve html at / url
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname + "/frontend/index.html"));
 });
 
+// api for getting all repositories with the app installed
 app.get("/get-repos", async function (req, res) {
   let repoNames = [];
 
+  // storing all repo names to an array
   for await (const { repository } of githubApp.eachRepository.iterator()) {
     repoNames.push(repository.full_name);
   }
@@ -27,17 +30,20 @@ app.get("/get-repos", async function (req, res) {
   res.send(repoNames);
 });
 
+// api for deplying test.yml to a github repo
 app.get("/deploy/:user/:repo", async function (req, res) {
   let user = req.params.user;
   let repo = req.params.repo;
 
   try {
+    // finding the selected repo
     for await (const {
       repository,
       octokit,
     } of githubApp.eachRepository.iterator()) {
       if (repository.full_name !== `${user}/${repo}`) continue;
 
+      // creating test.yml in .github/workflows folder
       const createFile = await octokit.request(
         "PUT /repos/{owner}/{repo}/contents/{path}",
         {
@@ -63,6 +69,7 @@ app.get("/deploy/:user/:repo", async function (req, res) {
   }
 });
 
+// running express server
 let port = 3000;
 app.listen(port, () => {
   console.log("Server is running at port: ", port);
