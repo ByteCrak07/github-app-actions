@@ -66,4 +66,5 @@ app.get("/deploy/:user/:repo", async function (req, res) {
 let port = 3000;
 app.listen(port, () => {
   console.log("Server is running at port: ", port);
+  console.log(`Go to http://localhost:${port} to view app`);
 });

@@ -1,8 +1,8 @@
-# Github App for creating a test github action
+# Github App for creating a simple github action
 
 ## Steps to run the app
 
-### 1. Clone the repository
+### 1. Clone the repository 📁
 
 ```bash
 # Clone the repository
@@ -12,7 +12,7 @@ git clone https://github.com/ByteCrak07/github-app-actions.git
 cd github-app-actions
 ```
 
-### 2. Create a .env file and configure environent variables
+### 2. Create a .env file and configure environent variables 📄
 
 ```bash
 # example .env file
@@ -20,7 +20,7 @@ APP_ID= <App Id of GitHub app>
 PRIVATE_KEY= <RSA private key of GitHub app>
 ```
 
-### 3. Run application in port 3000
+### 3. Run application in port 3000 💻
 
 ```bash
 # Run the app in development mode
@@ -29,3 +29,5 @@ npm run dev
 # Run the app in production mode
 npm start
 ```
+
+## Example github app 👉 [Test GitHub App - Actions](https://github.com/apps/test-github-app-actions)
