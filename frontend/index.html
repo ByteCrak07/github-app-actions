@@ -12,7 +12,7 @@
     <select id="repos">
       <option selected disabled>Choose repo</option>
     </select>
-    <button>Deploy</button>
+    <button onclick="deployActions()">Deploy</button>
 
     <script>
       function getRepos() {
@@ -36,6 +36,26 @@
       }
 
       getRepos();
+
+      function deployActions() {
+        let repoName = document.getElementById("repos").value;
+
+        if (repoName.toString() === "Choose repo") {
+          return;
+        }
+
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+
+        fetch(`http://localhost:3000/deploy/${repoName}`, requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            window.alert(`Test workflow file created for ${repoName}`);
+          })
+          .catch((error) => console.log("error", error));
+      }
     </script>
   </body>
 </html>
