@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+
 module.exports = function (app, ghApp) {
   // api for deplying test.yml to a github repo
   app.get("/deploy/:user/:repo", async function (req, res) {
@@ -21,7 +24,7 @@ module.exports = function (app, ghApp) {
             path: ".github/workflows/test.yml",
             message: "Add new test workflow",
             content: fs.readFileSync(
-              path.join(__dirname + "/workflows/test.yml"),
+              path.join(path.resolve(__dirname, "..") + "/workflows/test.yml"),
               {
                 encoding: "base64",
               }
