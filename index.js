@@ -28,12 +28,7 @@ require("./routes/getRepos")(app, ghApp);
 require("./routes/deploy")(app, ghApp);
 require("./routes/rerun")(app, ghApp);
 require("./routes/installWorkflowHook")(app, ghApp);
-
-ghApp.webhooks.on("workflow_run", ({ payload }) => {
-  console.log(payload.action);
-  console.log(payload.workflow_run.name);
-  console.log(payload.workflow_run.repository.full_name);
-});
+require("./routes/processWebhooks")(app, ghApp);
 
 app.use(createNodeMiddleware(ghApp));
 

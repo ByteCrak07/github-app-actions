@@ -11,6 +11,7 @@ module.exports = function (app, ghApp) {
       } of ghApp.eachRepository.iterator()) {
         if (repository.full_name !== `${user}/${repo}`) continue;
 
+        // for getting id of test.yml
         const workflowRunsData = await octokit.request(
           "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
           {
@@ -20,7 +21,7 @@ module.exports = function (app, ghApp) {
           }
         );
 
-        // creating test.yml in .github/workflows folder
+        // rerunning test.yml
         const runAction = await octokit.request(
           "POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun",
           {

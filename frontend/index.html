@@ -16,6 +16,14 @@
     <button onclick="reRunActions()">Re-run Action</button>
     <button onclick="createWebhook()">Create action webhook</button>
 
+    <h2>Workflow events</h2>
+    <table id="events-table" style="margin-top: -20px; border-spacing: 20px">
+      <th>Event no</th>
+      <th>Action</th>
+      <th>Name</th>
+      <th>Repository</th>
+    </table>
+
     <script>
       // function for calling /get-repos endpoint and displaying it in select
       function getRepos() {
@@ -61,6 +69,7 @@
           .catch((error) => console.log("error", error));
       }
 
+      // function for calling /rerun endpoint to re-run a workflow
       function reRunActions() {
         let repoName = document.getElementById("repos").value;
 
@@ -83,6 +92,7 @@
           .catch((error) => console.log("error", error));
       }
 
+      // function for calling /install-workflow-hooks endpoint to install a workflow hook
       function createWebhook() {
         let repoName = document.getElementById("repos").value;
 
@@ -106,12 +116,35 @@
           .catch((error) => console.log("error", error));
       }
 
-      //   let eventSource = new EventSource("/events/subscribe");
+      // function for subscribing to /events endpoint to listen to data from webhooks
+      function eventSubscribe() {
+        let events = new EventSource("/events");
 
-      //   eventSource.onmessage = function (event) {
-      //     console.log("New message", event.data);
-      //     // will log 3 times for the data stream above
-      //   };
+        events.onmessage = (event) => {
+          const parsedData = JSON.parse(event.data);
+          console.log(parsedData);
+          let eventsHTML = `<tr>
+              <th>Event no</th>
+              <th>Action</th>
+              <th>Name</th>
+              <th>Repository</th>
+              </tr>`;
+
+          parsedData.forEach((data, i) => {
+            eventsHTML += `<tr>
+              <td>#${parsedData.length - i}</td>
+              <td>${data.action}</td>
+              <td>${data.workflow_name}</td>
+              <td>${data.repository}</td>
+              </tr>`;
+          });
+
+          document.getElementById("events-table").innerHTML = eventsHTML;
+
+          console.log(parsedData);
+        };
+      }
+      eventSubscribe();
     </script>
   </body>
 </html>

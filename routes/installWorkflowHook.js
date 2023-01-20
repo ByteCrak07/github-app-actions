@@ -11,6 +11,7 @@ module.exports = function (app, ghApp) {
       } of ghApp.eachRepository.iterator()) {
         if (repository.full_name !== `${user}/${repo}`) continue;
 
+        // create new webhook
         const createWebhook = await octokit.request(
           "POST /repos/{owner}/{repo}/hooks",
           {
