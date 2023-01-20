@@ -13,6 +13,8 @@
       <option selected disabled>Choose repo</option>
     </select>
     <button onclick="deployActions()">Deploy</button>
+    <button onclick="reRunActions()">Re-run Action</button>
+    <button onclick="createWebhook()">Create action webhook</button>
 
     <script>
       // function for calling /get-repos endpoint and displaying it in select
@@ -58,6 +60,58 @@
           })
           .catch((error) => console.log("error", error));
       }
+
+      function reRunActions() {
+        let repoName = document.getElementById("repos").value;
+
+        if (repoName.toString() === "Choose repo") {
+          return;
+        }
+
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+
+        fetch(`http://localhost:3000/rerun/${repoName}`, requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            window.alert(
+              `Rerun is scheduled for the latest action ${repoName}`
+            );
+          })
+          .catch((error) => console.log("error", error));
+      }
+
+      function createWebhook() {
+        let repoName = document.getElementById("repos").value;
+
+        if (repoName.toString() === "Choose repo") {
+          return;
+        }
+
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+
+        fetch(
+          `http://localhost:3000/install-workflow-hook/${repoName}`,
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => {
+            window.alert(`Webhook installed successfully in ${repoName}`);
+          })
+          .catch((error) => console.log("error", error));
+      }
+
+      //   let eventSource = new EventSource("/events/subscribe");
+
+      //   eventSource.onmessage = function (event) {
+      //     console.log("New message", event.data);
+      //     // will log 3 times for the data stream above
+      //   };
     </script>
   </body>
 </html>
