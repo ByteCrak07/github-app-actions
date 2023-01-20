@@ -16,8 +16,12 @@ cd github-app-actions
 
 ```bash
 # example .env file
-APP_ID= <App Id of GitHub app>
-PRIVATE_KEY= <RSA private key of GitHub app>
+APP_ID= # App Id of GitHub app
+PRIVATE_KEY= # RSA private key of GitHub app
+WEBHOOK_URL= # Use proxy url for development or actual url in production
+WEBHOOK_SECRET= # development or secret
+OAUTH_CLIENT_ID= # GitHub OAuth App Client ID
+OAUTH_CLIENT_SECRET= # GitHub OAuth App Client Secret
 ```
 
 ### 3. Run application in port 3000 💻
